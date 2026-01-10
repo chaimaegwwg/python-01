@@ -1,0 +1,50 @@
+class Plant:
+    def __init__(self, name , height):
+        self.name = name 
+        self.height = height
+
+    def grow(self, amount ):
+        self.height += amount
+    def __str__(self):
+        return f"Name :{self.name}, Height: {self.height}"
+
+class FloweringPlant(Plant):
+    def __init__(self, name , height , flower_color):
+        super().__init__(name , height)
+        self.flower_color = flower_color
+
+    def bloom(self):
+        if(self.height > 10):
+            return True 
+        else:
+            return False
+    def __str__(self):
+        if self.bloom() is True: 
+            return f"Name :{self.name}, Height: {self.height} , Color: {self.flower_color}  (blooming)"
+        else:
+            return f"Name :{self.name}, Height: {self.height} , Color: {self.flower_color} (not blooming)"
+
+class PrizeFlower(FloweringPlant):
+    def __init__(self , name , height , flower_color, prize_points):
+        super().__init__(name , height, flower_color)
+        self.prize_points = prize_points
+
+    def __str__(self):
+        return f"Name :{self.name}, Height: {self.height} , Color: {self.flower_color}, Prize Point: {self.prize_points}"
+
+class GardenManager:
+    total_gardens = 0
+    def __init__(self, owner):
+        self.owner = owner
+        self.plants = []
+        GardenManager.total_gardens += 1 
+    class GardenStats:
+        def __init__(self , regular = 0, flowering = 0 , prize = 0)
+        def count_types(self, plant_list)
+            if isinstance(plan , PrizeFlower):
+                prize += 1
+            elif isinstance(plan ,loweringPlant):
+                flowering += 1 
+            else:
+                regular += 1 
+        
