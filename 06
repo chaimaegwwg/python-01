@@ -3,10 +3,12 @@ class Plant:
         self.name = name 
         self.height = height
 
-    def grow(self, amount ):
+    def grow(self, amount):
         self.height += amount
+        return amount
+
     def __str__(self):
-        return f"Name :{self.name}, Height: {self.height}"
+        return f"- {self.name}: {self.height}cm"
 
 class FloweringPlant(Plant):
     def __init__(self, name , height , flower_color):
@@ -18,33 +20,115 @@ class FloweringPlant(Plant):
             return True 
         else:
             return False
+    def grow(self, amount):
+        self.height += amount
+        return amount
     def __str__(self):
         if self.bloom() is True: 
-            return f"Name :{self.name}, Height: {self.height} , Color: {self.flower_color}  (blooming)"
+            return f"- {self.name}: {self.height}cm {self.flower_color}(blooming)"
         else:
-            return f"Name :{self.name}, Height: {self.height} , Color: {self.flower_color} (not blooming)"
+            return f"- {self.name}: {self.height}cm {self.flower_color} (not blooming)"
 
 class PrizeFlower(FloweringPlant):
     def __init__(self , name , height , flower_color, prize_points):
         super().__init__(name , height, flower_color)
         self.prize_points = prize_points
 
+    def grow(self, amount):
+        self.height += amount
+        return amount
+
     def __str__(self):
-        return f"Name :{self.name}, Height: {self.height} , Color: {self.flower_color}, Prize Point: {self.prize_points}"
+        return f"- {self.name}: {self.height}cm, {self.flower_color} (blooming), Prize points: {self.prize_points}"
 
 class GardenManager:
     total_gardens = 0
     def __init__(self, owner):
         self.owner = owner
         self.plants = []
+        self.total_grow = 0
         GardenManager.total_gardens += 1 
-    class GardenStats:
-        def __init__(self , regular = 0, flowering = 0 , prize = 0)
-        def count_types(self, plant_list)
-            if isinstance(plan , PrizeFlower):
-                prize += 1
-            elif isinstance(plan ,loweringPlant):
-                flowering += 1 
-            else:
-                regular += 1 
         
+    def add_plant(self,plant):
+        self.plants.append(plant)
+        print(f"Added {plant.name} to {self.owner}'s garden")
+    def grow_up(self):
+        for plant in self.plants:
+            self.total_grow += 1
+            print(f"{plant.name} grew {plant.grow(1)}cm")
+
+
+    @staticmethod
+    def total_score(plants):
+        total_height = 0
+        for plant in plants:
+            total_height += plant.height
+        return total_height
+
+    class GardenStats:
+        # def __init__(self , regular = 0, flowering = 0 , prize = 0):
+        #     self.regular = regular
+        #     self.flowering = flowering
+        #     self.prize = prize
+        def count_types(plants, totale_grow):
+            prize = 0
+            flowering = 0
+            regular = 0
+            for plan in plants:
+                if isinstance(plan , PrizeFlower):
+                    prize += 1
+                elif isinstance(plan ,FloweringPlant):
+                    flowering += 1 
+                else:
+                    regular += 1 
+        
+            print(f"Plants added: {len(plants)}, Total growth: {totale_grow}cm") 
+            print(f"Plant types: {regular} regular, {flowering} flowering, {prize} prize flowers")
+
+        def height_validation(h):
+            print(f"Height validation test: {h > 0}")
+    
+
+        
+        
+
+def main():
+    
+    manager = GardenManager("Alice")
+
+    # 2) creat a plant 
+    plant1 = Plant("Oak Tree", 101)
+    plant2 = FloweringPlant("Rose",  26, "Red")
+    plant3 = PrizeFlower("Sunflower", 51, "Yellow", 100)
+
+    man = GardenManager("bob")
+
+    # 2) creat a plant 
+    plant1 = Plant("Oak Tree", 101)
+    plant2 = FloweringPlant("Rose",  26, "Red")
+    plant3 = PrizeFlower("Sunflower", 51, "Yellow", 100)
+
+    # 3) add a garden
+    manager.add_plant(plant1)
+    manager.add_plant(plant2)
+    manager.add_plant(plant3)
+
+    man.add_plant(plant1)
+    man.add_plant(plant2)
+    man.add_plant(plant3)
+
+    manager.grow_up()
+
+
+    # 4) print info
+    for plant in manager.plants:
+        print(plant)
+    manager.GardenStats.count_types(manager.plants, manager.total_grow)
+    manager.GardenStats.height_validation(manager.total_grow)
+    var = manager.total_score(manager.plants)
+    var1 = man.total_score(man.plants)
+    print(f"Garden scores - {manager.owner}: {var}, {man.owner}: {var1}")
+
+    print(f"Total gardens managed: {GardenManager.total_gardens}")
+
+main()
