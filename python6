@@ -1,0 +1,17 @@
+class Plant:
+    pass
+
+class GardenManager:
+    def __init__(self, name):
+        self.name = name
+        self.plants = []
+
+    def add_plan(self, plant):
+        self.plants.append(plant)
+
+    def print_plants(self, plants):
+        try:
+            for plan in plants:
+                print(f"Added {plan.name} successfully")
+        except ValueError:
+            print("Error adding plant: Plant name cannot be empty!")
