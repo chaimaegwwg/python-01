@@ -1,0 +1,37 @@
+def check_plant_health(plant_name, water_level, sunlight_hours):
+    try:
+        if not plant_name:
+            raise ValueError("Error: Plant name cannot be empty!")
+        if water_level > 10:
+            raise ValueError(f"Error: Water level {water_level} is too high (max 10")
+        if water_level < 0:
+            raise ValueError(f"Error: Water level {water_level} is too low (min 0")
+        if sunlight_hours > 12:
+            raise ValueError(f"Error: Sunlight hours {sunlight_hours} is too high (min 12)")
+        if sunlight_hours < 2:
+            raise ValueError(f"Error: Sunlight hours {sunlight_hours} is too low (min 2)")
+
+        print(f"Plant '{plant_name}' is healthy!")
+
+    except ValueError as e:
+        print(e)
+
+def test_plant_checks():
+    print("=== Garden Plant Health Checker ===")
+    print("Testing good values...")
+    check_plant_health("tomato", 8, 4)
+    print()
+    print("Testing empty plant name...")
+    check_plant_health(None, 8, 2)
+
+    print()
+    print("Testing bad water level...")
+    check_plant_health("tomato", 15, 2)
+
+    print()
+    print("Testing bad sunlight hours...")
+    check_plant_health("tomato", 8, 0)
+    print()
+    print("All error raising tests completed!")
+
+test_plant_checks()
