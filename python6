@@ -1,17 +1,58 @@
-class Plant:
+class GardenError(Exception):
     pass
-
-class GardenManager:
+class Plant:
     def __init__(self, name):
         self.name = name
+        if not name:
+            raise ValueError("Plant name cannot be empty!")
+class GardenManager:
+    def __init__(self):
+        # self.name = name
         self.plants = []
 
-    def add_plan(self, plant):
-        self.plants.append(plant)
-
-    def print_plants(self, plants):
+    def add_plan(self,plan):
         try:
-            for plan in plants:
-                print(f"Added {plan.name} successfully")
+            plant = Plant(plan)
+            self.plants.append(plant)
+            print(f"Added {plan} successfully")
+        except ValueError as e:
+            print("Error adding plant:", e)
+        
+    def water(self):
+        try:
+            print("Opening watering system")
+            for plan in self.plants:
+                print(f"Watering {plan.name} - success")
         except ValueError:
-            print("Error adding plant: Plant name cannot be empty!")
+                print("failed")
+        finally:
+            print("Closing watering system (cleanup)")
+    def check(self,water,name):
+        try:
+            if water > 10:
+                raise ValueError(f" Water level {water} is too high (max 10)")
+            elif water == 0:
+                raise GardenError("Not enough water in tank")
+            else: 
+                print(f"{name}: healthy (water: {water}, sun: 8)")
+        except ValueError as e:
+            print(f"Error checking {name}:",e)
+        except GardenError as e:
+            print("Caught GardenError:",e)
+        finally:
+            print("System recovered and continuing...")
+            print()
+            print("Garden management system test complete!")
+p = GardenManager()
+p.add_plan("tomato")
+p.add_plan("lettuce")
+p.add_plan("")
+print()
+print("Watering plants...")
+p.water()
+print()
+p.check(5,"tomato")
+p.check(15,"lettuce")
+print()
+print("Testing error recovery...")
+p.check(0,"lettuce")
