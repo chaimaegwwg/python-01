@@ -1,0 +1,29 @@
+def water_plants(plant_list):
+    print("Opening watering system")
+    try:
+        for plant in plant_list:
+            if plant in ["tomato" , "lettuce" , "carrots"]:
+                print(f"Watering {plant}")
+            else:
+                raise Exception("Cannot water None - invalid plant!") 
+
+    except Exception as e:
+        print("Error:",e)
+    finally:
+        print("Closing watering system (cleanup)")
+def test_watering_system():
+    print("=== Garden Watering System ===")
+    print("Testing normal watering...")
+    plan =["tomato","lettuce","carrots"]
+    water_plants(plan)
+    print("Watering completed successfully")
+    print()
+    print("Testing with error...")
+    plan =["tomato","lettuce","none"]
+    water_plants(plan)
+
+    print()
+    print("Cleanup always happens, even with errors!")
+
+
+test_watering_system()
